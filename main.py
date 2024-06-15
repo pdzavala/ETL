@@ -1,4 +1,5 @@
 from fastapi import FastAPI, HTTPException
+from fastapi.middleware.cors import CORSMiddleware
 from google.cloud import storage
 from google.oauth2 import service_account
 from dotenv import load_dotenv
@@ -9,6 +10,17 @@ import io
 
 app = FastAPI()
 
+# CORS
+origins = [
+    '*'
+]
+
+app.add_middleware(CORSMiddleware,
+                   allow_origins=origins,
+                   allow_credentials=True,
+                   allow_methods=['*'],
+                   allow_headers=['*'],
+                   max_age=3600)
 
 # Inicializar cliente de Google Cloud Storage
 load_dotenv()
